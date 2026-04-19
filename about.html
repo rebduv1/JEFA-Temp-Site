@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - JEFA</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #1e4d7b;
+            --accent-gold: #d4af37;
+            --soft-cream: #faf8f5;
+            --light-blue: #e8f1f8;
+            --text-dark: #2c3e50;
+            --text-light: #5a6c7d;
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--text-dark);
+            background-color: var(--soft-cream);
+            line-height: 1.6;
+        }
+
+        /* Header Styles */
+        header {
+            background: white;
+            padding: 1.5rem 5%;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-image {
+            height: 60px;
+            width: auto;
+            border-radius: 50%;
+        }
+
+        .logo-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--primary-blue);
+        }
+
+        nav {
+            display: flex;
+            gap: 2.5rem;
+        }
+
+        nav a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 400;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover,
+        nav a.active {
+            color: var(--primary-blue);
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, var(--primary-blue), #2a5d8f);
+            color: white;
+            padding: 6rem 5% 4rem;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .page-header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* Content Section */
+        .content-section {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 4rem 5%;
+        }
+
+        .content-section h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.5rem;
+            color: var(--primary-blue);
+            margin: 3rem 0 1.5rem;
+            text-align: center;
+        }
+
+        .content-section h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            color: var(--primary-blue);
+            margin: 2rem 0 1rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .icon {
+            font-size: 1.5rem;
+        }
+
+        .content-section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            color: var(--text-light);
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .value-card {
+            background: white;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 12px;
+            padding: 2rem;
+        }
+
+        .value-card h4 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        .value-card p {
+            font-size: 1rem;
+            margin: 0;
+        }
+
+        /* Team Section */
+        .team-section {
+            background: var(--light-blue);
+            padding: 4rem 5%;
+        }
+
+        .team-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .team-member {
+            background: white;
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            display: flex;
+            gap: 2rem;
+            align-items: flex-start;
+        }
+
+        .member-photo-container {
+            width: 130px;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .member-photo {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--accent-gold);
+        }
+
+        .member-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin-top: 1rem;
+            text-align: center;
+            line-height: 1.2;
+        }
+
+        .member-title {
+            font-family: 'Montserrat', serif;
+            font-size: 0.9rem;
+            color: var(--accent-gold);
+            font-weight: 600;
+            text-align: center;
+            margin-top: 0.3rem;
+        }
+
+        .member-bio {
+            flex: 1;
+        }
+
+        .member-bio p {
+            font-size: 1rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .read-more-btn {
+            background: none;
+            border: none;
+            color: var(--accent-gold);
+            font-family: 'Montserrat', serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 0;
+            margin-top: 0.5rem;
+        }
+
+        .read-more-btn:hover {
+            text-decoration: underline;
+        }
+
+        .bio-extended {
+            display: none;
+            margin-top: 0.8rem;
+        }
+
+        .bio-extended.show {
+            display: block;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: var(--primary-blue);
+            color: white;
+            padding: 4rem 5%;
+            text-align: center;
+            margin-top: 4rem;
+        }
+
+        .cta-section h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: var(--accent-gold);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            margin-top: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .cta-button:hover {
+            background: white;
+            color: var(--primary-blue);
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary-blue);
+            color: white;
+            padding: 3rem 5%;
+            text-align: center;
+        }
+
+        footer p {
+            opacity: 0.9;
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                display: none;
+            }
+            
+            .page-header h1 {
+                font-size: 2.5rem;
+            }
+
+            .team-member {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <div class="logo-container">
+                <img src="jefa-logo.png" alt="JEFA Logo" class="logo-image">
+                <a href="/" class="logo-text" style="text-decoration: none; color: var(--primary-blue);">Jewish Education Fund of America</a>
+            </div>
+                                    <nav>
+                <a href="/">Home</a>
+                <a href="/#info">Educational Choice</a>
+                <a href="/#faq">FAQ</a>
+                <a href="/#contact">Contact</a>
+                <a href="about.html" class="active">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <h1>About JEFA</h1>
+        <p>Building a covenant partnership to preserve Torah education for the next generation</p>
+    </section>
+
+    <!-- Mission & Vision Section -->
+    <section class="content-section">
+        <h2>Mission, Vision & Values</h2>
+        
+        <h3><span class="icon">🎯</span> Our Mission</h3>
+        <p>The Jewish Education Fund of America (JEFA) supports Torah education of Orthodox Jewish children through the Education Freedom Tax Credit. By fostering a covenant partnership between Christians and Jewish families, we encourage spiritual continuity and strengthen the preservation of Jewish heritage for generations to come.</p>
+
+        <h3><span class="icon">🔭</span> Our Vision</h3>
+        <p>To build a future where the sacred traditions of Torah education thrive, ensuring that every Orthodox Jewish child has access to the tools and teachings needed to carry forward the spiritual legacy of their faith. Through partnerships rooted in mutual respect and shared values, we strive to be a beacon of hope and unity, creating a lasting impact on both communities and the world.</p>
+
+        <h3><span class="icon">💎</span> Our Values</h3>
+        <div class="values-grid">
+            <div class="value-card">
+                <h4>Spiritual Continuity</h4>
+                <p>Preserving the Torah's teachings by empowering parents and schools to instill faith and tradition in the next generation.</p>
+            </div>
+            <div class="value-card">
+                <h4>Covenant Partnership</h4>
+                <p>Collaboration between Christians and Jewish families rooted in shared values, mutual respect, and dedication to Torah education.</p>
+            </div>
+            <div class="value-card">
+                <h4>Legacy & Education</h4>
+                <p>Bridging generations to ensure the timeless wisdom and traditions of Torah are lovingly passed down to the next.</p>
+            </div>
+            <div class="value-card">
+                <h4>Compassion & Action</h4>
+                <p>Transforming prayer and advocacy into tangible educational support for children, families, and communities.</p>
+            </div>
+            <div class="value-card">
+                <h4>Integrity & Stewardship</h4>
+                <p>Stewarding resources responsibly, ensuring every contribution maximizes its impact while honoring supporters' trust.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="team-section">
+        <div class="team-container">
+            <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; color: var(--primary-blue); text-align: center; margin-bottom: 3rem;">Board of Directors</h2>
+            
+            <!-- David Klein -->
+            <div class="team-member">
+                <div class="member-photo-container">
+                    <img src="david-klein.jpg" alt="David N. Klein" class="member-photo">
+                    <div class="member-name">David N. Klein</div>
+                    <div class="member-title">Founder, President & CEO</div>
+                </div>
+                <div class="member-bio">
+                    <p>David N. Klein is the Founder and President of the Jewish Education Fund of America (JEFA), where he leads the organization's national strategy to expand access to Jewish education through scholarship and tuition tax-credit programs. His work focuses on building sustainable administrative and financial frameworks that enable families across the United States to afford high-quality Jewish day school education while connecting donors with meaningful opportunities to support the next generation of Jewish students. Through JEFA, he is helping develop the infrastructure necessary to administer scholarship programs and advance the broader school-choice movement in support of Jewish education.</p>
+                    <div class="bio-extended" id="bio-david">
+                        <p>In addition to his leadership at JEFA, David serves as Executive Director of the Lakewood Development Corporation, where he also acts as the Urban Enterprise Zone Coordinator and Administrator of Foreign Trade Zone #235 for Lakewood, New Jersey. In these roles he oversees economic development initiatives, government programs, and strategic partnerships designed to strengthen the local economy and support business growth. His work regularly involves coordinating with government agencies, business leaders, and community organizations to advance investment and development within the region.</p>
+                        <p>David's professional background includes significant experience in finance, operations, and business development. He previously served as Chief Operating Officer of Hypersonic Intercept Technologies (HIT), Inc., and previously served as Chief Operating Officer of Amplified Power & Gas, an energy services company. Earlier in his career he was Managing Director of Klein Capital LLC, a commercial real estate services firm, and served as an AVP and Senior Small Business Financial Specialist at Wachovia Bank, working closely with entrepreneurs and small businesses. He also worked as a Financial Services Representative with MetLife and earlier served as a teacher of Talmudic Law at RPRY. David holds a Master of Talmudic Law from Torah Ore Talmudic College, reflecting his longstanding commitment to Torah learning and Jewish education.</p>
+                    </div>
+                    <button class="read-more-btn" onclick="toggleBio('david')">Read more ▼</button>
+                </div>
+            </div>
+
+            <!-- Trent Franks -->
+            <div class="team-member">
+                <div class="member-photo-container">
+                    <img src="trent-franks.jpg" alt="Congressman Trent Franks" class="member-photo">
+                    <div class="member-name">Congressman Trent Franks</div>
+                    <div class="member-title">Director</div>
+                </div>
+                <div class="member-bio">
+                    <p>Congressman Trent Franks served in the U.S. Congress from 2003 to 2017, representing Arizona, where he became widely known as a leading national advocate for educational freedom and school choice. Nearly three decades ago, Trent was the author and leading proponent of the original Arizona Scholarship Tax Credit to help families access private and faith-based education for their children. Some form of this legislation went on to be passed in approximately half the states in the union. Its basic framework was passed in the United States Congress as part of the One Big Beautiful Bill in 2025 and is now known as the Federal Education Freedom Tax Credit.</p>
+                    <div class="bio-extended" id="bio-trent">
+                        <p>Trent's commitment to children and pro-family policy began long before his service in Congress. At just 29 years old, he was appointed by Arizona's Governor to lead the Arizona Governor's Office for Children, a cabinet-level division responsible for coordinating statewide policy and programs serving Arizona's children. In this role, he worked to strengthen programs supporting children and families throughout the state. Because of his lifelong dedication to children's issues, Arizona state legislators later nominated him "Children's Champion." He was also the founder of the Arizona Family Research Institute, which later became the Center for Arizona Policy, an organization dedicated to strengthening families and promoting pro-family public policy.</p>
+                        <p>During his time in Congress, Franks was Chairman of the Orphans and Vulnerable Children's Caucus and Chairman of the bipartisan Israel Allies Caucus. He became widely known as one of the strongest advocates in Congress for Israel and the Jewish people and was widely regarded by colleagues and community leaders as "the most pro-Israel member of Congress." Throughout his career, he has consistently worked to strengthen the U.S.–Israel relationship and to support policies that protect religious freedom and faith-based education.</p>
+                    </div>
+                    <button class="read-more-btn" onclick="toggleBio('trent')">Read more ▼</button>
+                </div>
+            </div>
+
+            <!-- Philip Skaist -->
+            <div class="team-member">
+                <div class="member-photo-container">
+                    <img src="philip-skaist.jpg" alt="Philip Skaist" class="member-photo">
+                    <div class="member-name">Philip Skaist</div>
+                    <div class="member-title">Chief Marketing Officer</div>
+                </div>
+                <div class="member-bio">
+                    <p>Philip Skaist serves as Chief Marketing Officer of the Jewish Education Fund of America (JEFA), where he leads the organization's national communications, branding, and donor outreach strategy. In this role, he oversees the development of marketing campaigns, media production, and digital storytelling designed to expand awareness of Jewish educational scholarship opportunities and inspire philanthropic support for Orthodox Jewish day school education across the United States.</p>
+                    <div class="bio-extended" id="bio-philip">
+                        <p>Philip brings more than two decades of experience in media production, marketing, and communications. As the owner of Signature Video Productions since 2004, he has worked with organizations, businesses, and community institutions to produce high-quality visual media and marketing content. His background in customer relations and communications, including experience with IDT Corporation, has helped him develop a strong ability to craft compelling messaging, manage fast-paced projects, and execute campaigns under tight deadlines.</p>
+                        <p>Earlier in his career, Philip served as a teacher at the Hebrew Academy of San Francisco, reflecting his longstanding commitment to Jewish education and community life. He studied at the Talmudical Academy of Baltimore and continued his learning at Ner Israel Rabbinical College. His combination of educational experience, media expertise, and dedication to strengthening Jewish institutions helps JEFA communicate its mission of expanding access to high-quality Jewish education for families across America.</p>
+                    </div>
+                    <button class="read-more-btn" onclick="toggleBio('philip')">Read more ▼</button>
+                </div>
+            </div>
+
+            <!-- Joshua Brotsky -->
+            <div class="team-member">
+                <div class="member-photo-container">
+                    <img src="josh-brotsky.jpg" alt="Joshua Brotsky" class="member-photo">
+                    <div class="member-name">Joshua Brotsky</div>
+                    <div class="member-title">Chief Financial Officer</div>
+                </div>
+                <div class="member-bio">
+                    <p>Joshua Brotsky serves as Chief Financial Officer of the Jewish Education Fund of America (JEFA), where he oversees the organization's financial management, operational systems, and fiscal accountability. In this role, he is responsible for developing financial processes that support JEFA's scholarship-granting programs, ensuring transparent stewardship of donor funds, and helping build the administrative infrastructure required to scale educational scholarship initiatives that expand access to Jewish day school education.</p>
+                    <div class="bio-extended" id="bio-josh">
+                        <p>Joshua brings more than a decade of leadership experience in financial administration, operations management, and organizational systems. As General Manager of CYA Trading in Lakewood, New Jersey, he managed company operations and implemented modern organizational tools and workflow systems to improve productivity, communication, and financial tracking. He has extensive experience using financial and management software including QuickBooks, Excel, and collaborative productivity platforms, and is known for building efficient systems that help organizations operate smoothly and maintain strong internal controls.</p>
+                        <p>Earlier in his career, Joshua served as Administrator of Yeshiva Medrash Chaim, where he managed tuition collections, donor relations, financial reporting, and event coordination for the institution. He also held the role of Operations Manager at Community Care Behavioral Health, overseeing logistics, transportation operations, and facility compliance. Joshua earned a Bachelor's degree in Talmudic Studies from Fairleigh Dickinson University and brings to JEFA a strong commitment to responsible financial stewardship and the advancement of Jewish education.</p>
+                    </div>
+                    <button class="read-more-btn" onclick="toggleBio('josh')">Read more ▼</button>
+                </div>
+            </div>
+
+            <!-- Chaim Orelowitz -->
+            <div class="team-member">
+                <div class="member-photo-container">
+                    <div style="width: 110px; height: 110px; border-radius: 50%; background: linear-gradient(135deg, #1e4d7b, #2a5d8f); display: flex; align-items: center; justify-content: center; border: 3px solid #d4af37;">
+                        <span style="font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 700; color: white;">COO</span>
+                    </div>
+                    <div class="member-name">Chaim Orelowitz</div>
+                    <div class="member-title">Director of Operations</div>
+                </div>
+                <div class="member-bio">
+                    <p>Chaim Orelowitz serves as Director of Operations for the Jewish Education Fund of America (JEFA), where he manages organizational operations, program coordination, and community engagement initiatives that support JEFA's mission of expanding access to Orthodox Jewish education. In this role, he helps oversee the administrative and operational systems that allow JEFA's scholarship and education initiatives to function efficiently while coordinating with community partners, schools, and families.</p>
+                    <div class="bio-extended" id="bio-chaim">
+                        <p>Chaim brings a diverse background in education, social services, and nonprofit program management. He previously served as a Project Manager and Licensed Social Worker (LSW) with the Lakewood Community Service Corporation, where he worked on community outreach initiatives and social service programs. His experience includes providing clinical social work services to children and young adults, conducting assessments for community programs, and assisting with digital outreach efforts that connect families with vital services.</p>
+                        <p>Earlier in his career, Chaim worked extensively in Jewish education as a teacher in Lakewood, including at Tashbar of Lakewood and through Catapult Learning, where he developed personalized curriculum for students with specialized learning needs. He also served as a program coordinator with Aish HaTorah, where he expanded a national business mentorship program connecting young professionals with industry leaders. Chaim holds a Master of Social Work from the Wurzweiler Graduate School of Social Work and a Bachelor's degree in Political Science from Touro University. His experience in education, community services, and program management helps ensure JEFA operates effectively while strengthening opportunities for Jewish students and families.</p>
+                    </div>
+                    <button class="read-more-btn" onclick="toggleBio('chaim')">Read more ▼</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <h2>Ready to Learn More?</h2>
+        <p>Contact us today to discover how you can support Jewish education through the Education Freedom Tax Credit.</p>
+        <a href="/#contact" class="cta-button">Contact Us</a>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2027 Jewish Education Fund of America (JEFA) | www.jefamerica.org</p>
+        <p>Empowering the future through quality Jewish education</p>
+    </footer>
+
+    <script>
+        function toggleBio(id) {
+            const bioExtended = document.getElementById('bio-' + id);
+            const button = event.target;
+            
+            if (bioExtended.classList.contains('show')) {
+                bioExtended.classList.remove('show');
+                button.textContent = 'Read more ▼';
+            } else {
+                bioExtended.classList.add('show');
+                button.textContent = 'Show less ▲';
+            }
+        }
+    </script>
+</body>
+</html>
