@@ -862,7 +862,7 @@
             <div class="form-box">
                 <h2>Contact Us</h2>
                 <div id="contactSuccess" class="success-message"></div>
-                <form id="contactForm" action="https://formsubmit.co/info@jefamerica.org" method="POST">
+                <form action="https://formsubmit.co/info@jefamerica.org" method="POST" id="contactForm">
                     <!-- Hidden fields for FormSubmit configuration -->
                     <input type="hidden" name="_subject" value="New Contact Form Submission - JEFA">
                     <input type="hidden" name="_autoresponse" value="Thank you for Contacting Jewish Education Fund of America, we will be in touch with you shortly!">
@@ -976,69 +976,82 @@
         }
     </script>
 
+    
+
     <script>
         // Supabase Configuration
         const SUPABASE_URL = 'https://uiljkbsmlhabetfirege.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVpbGprYnNtbGhhYmV0ZmlyZWdlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDU3MDcyNDksImV4cCI6MjA2MTI4MzI0OX0.4WlGKOLVBASFcn-eLwLFGA_PX1nJgsd';
 
-        // Form submission handler
-        async function handleFormSubmit(event) {
-            event.preventDefault();
-            
-            const form = event.target;
-            const submitButton = form.querySelector('button[type="submit"]');
-            const originalButtonText = submitButton.textContent;
-            
-            // Get form data
-            const formData = {
-                name: form.querySelector('input[name="name"]').value,
-                email: form.querySelector('input[name="email"]').value,
-                subject: form.querySelector('input[name="subject"]').value,
-                message: form.querySelector('textarea[name="message"]').value
-            };
-            
-            // Disable button and show loading state
-            submitButton.disabled = true;
-            submitButton.textContent = 'Sending...';
-            
-            try {
-                // Submit to Supabase
-                const response = await fetch(`${SUPABASE_URL}/rest/v1/contact_submissions`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'apikey': SUPABASE_ANON_KEY,
-                        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-                        'Prefer': 'return=minimal'
-                    },
-                    body: JSON.stringify(formData)
-                });
-                
-                if (response.ok) {
-                    // Success! Redirect to thank you page
-                    window.location.href = 'thank-you.html';
-                } else {
-                    // Error handling
-                    throw new Error('Submission failed');
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                alert('There was an error submitting your message. Please try again or email us directly at info@jefamerica.org');
-                submitButton.disabled = false;
-                submitButton.textContent = originalButtonText;
-            }
-        }
-        
-        // Attach form handler when page loads
+        // Dual submission: Supabase + FormSubmit
         document.addEventListener('DOMContentLoaded', function() {
             const contactForm = document.querySelector('form[action*="formsubmit"]');
+            
             if (contactForm) {
-                // Remove FormSubmit action
-                contactForm.removeAttribute('action');
-                contactForm.removeAttribute('method');
+                console.log('Contact form found - setting up dual submission');
                 
-                // Add our handler
-                contactForm.addEventListener('submit', handleFormSubmit);
+                contactForm.addEventListener('submit', async function(e) {
+                    e.preventDefault(); // Stop the default submit
+                    console.log('Form submitted - sending to both Supabase and email');
+                    
+                    const submitButton = contactForm.querySelector('button[type="submit"]');
+                    const originalText = submitButton ? submitButton.textContent : 'Send Message';
+                    
+                    // Get form data
+                    const formData = {
+                        name: contactForm.querySelector('input[name="name"]')?.value || '',
+                        email: contactForm.querySelector('input[name="email"]')?.value || '',
+                        subject: contactForm.querySelector('input[name="subject"]')?.value || '',
+                        message: contactForm.querySelector('textarea[name="message"]')?.value || ''
+                    };
+                    
+                    console.log('Form data:', formData);
+                    
+                    // Show loading
+                    if (submitButton) {
+                        submitButton.disabled = true;
+                        submitButton.textContent = 'Sending...';
+                    }
+                    
+                    try {
+                        // Send to Supabase (don't wait for response, fire and forget)
+                        fetch(`${SUPABASE_URL}/rest/v1/contact_submissions`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'apikey': SUPABASE_ANON_KEY,
+                                'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+                                'Prefer': 'return=minimal'
+                            },
+                            body: JSON.stringify(formData)
+                        }).then(response => {
+                            if (response.ok || response.status === 201) {
+                                console.log('✅ Saved to Supabase successfully');
+                            } else {
+                                console.warn('⚠️ Supabase save failed, but continuing with email');
+                            }
+                        }).catch(err => {
+                            console.warn('⚠️ Supabase error:', err, 'but continuing with email');
+                        });
+                        
+                        // Wait a moment for Supabase, then submit to FormSubmit
+                        setTimeout(() => {
+                            console.log('Submitting to FormSubmit for email notification...');
+                            // Let the form submit naturally to FormSubmit
+                            contactForm.submit();
+                        }, 500);
+                        
+                    } catch (error) {
+                        console.error('Error:', error);
+                        // Even if there's an error, still try to send email
+                        console.log('Attempting FormSubmit anyway...');
+                        contactForm.submit();
+                    }
+                });
+                
+                console.log('✅ Dual submission handler attached');
+            } else {
+                console.error('❌ Contact form not found');
             }
         });
     </script>
