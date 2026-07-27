@@ -1,0 +1,344 @@
+{
+ "updated": "2026-07-26",
+ "intro": {
+  "heading": "Where the states stand.",
+  "body": "For a family to receive an EFTC scholarship, their state must opt in to the program. Governors are deciding now \u2014 here is where each one stands.",
+  "labels": {
+   "in": "opted in",
+   "announced": "announced",
+   "vetoed": "governor vetoed",
+   "declined": "declined",
+   "undecided": "no decision yet"
+  }
+ },
+ "groups": {
+  "in": {
+   "title": "States that have opted in",
+   "blurb": "These states are participating. Their governors submit qualifying Scholarship Granting Organizations to the U.S. Treasury each year, and scholarships become available to families once the program begins January 1, 2027."
+  },
+  "announced": {
+   "title": "States that have announced they will opt in",
+   "blurb": "These governors have said publicly that they intend to participate but have not yet completed the formal opt-in. Watch for them to finalize before the program begins."
+  },
+  "undecided": {
+   "title": "States that have not yet decided",
+   "blurb": "These governors have not announced a decision either way. Time is short \u2014 the program goes live January 1, 2027."
+  },
+  "vetoed": {
+   "title": "States where the governor vetoed an opt-in bill",
+   "blurb": "In these states the legislature passed an opt-in bill and the governor vetoed it. Absent an override or a reversal, families here will not be eligible for scholarships."
+  },
+  "declined": {
+   "title": "States that have declined to participate",
+   "blurb": "These governors have stated their states will not take part. Families here will not be eligible for scholarships unless the decision is reversed."
+  }
+ },
+ "states": {
+  "AL": {
+   "name": "Alabama",
+   "gov": "Gov. Kay Ivey",
+   "status": "in",
+   "date": ""
+  },
+  "AK": {
+   "name": "Alaska",
+   "gov": "Gov. Mike Dunleavy",
+   "status": "in",
+   "date": ""
+  },
+  "AZ": {
+   "name": "Arizona",
+   "gov": "Gov. Katie Hobbs",
+   "status": "vetoed",
+   "date": "2026-04-14"
+  },
+  "AR": {
+   "name": "Arkansas",
+   "gov": "Gov. Sarah Huckabee Sanders",
+   "status": "in",
+   "date": "2026-01-16"
+  },
+  "CA": {
+   "name": "California",
+   "gov": "Gov. Gavin Newsom",
+   "status": "undecided",
+   "date": ""
+  },
+  "CO": {
+   "name": "Colorado",
+   "gov": "Gov. Jared Polis",
+   "status": "in",
+   "date": "2025-12-05"
+  },
+  "CT": {
+   "name": "Connecticut",
+   "gov": "Gov. Ned Lamont",
+   "status": "undecided",
+   "date": ""
+  },
+  "DE": {
+   "name": "Delaware",
+   "gov": "Gov. Matt Meyer",
+   "status": "undecided",
+   "date": ""
+  },
+  "DC": {
+   "name": "District of Columbia",
+   "gov": "Mayor Muriel Bowser",
+   "status": "undecided",
+   "date": ""
+  },
+  "FL": {
+   "name": "Florida",
+   "gov": "Gov. Ron DeSantis",
+   "status": "in",
+   "date": "2026-01-28"
+  },
+  "GA": {
+   "name": "Georgia",
+   "gov": "Gov. Brian Kemp",
+   "status": "in",
+   "date": ""
+  },
+  "HI": {
+   "name": "Hawaii",
+   "gov": "Gov. Josh Green",
+   "status": "declined",
+   "date": ""
+  },
+  "ID": {
+   "name": "Idaho",
+   "gov": "Gov. Brad Little",
+   "status": "in",
+   "date": ""
+  },
+  "IL": {
+   "name": "Illinois",
+   "gov": "Gov. JB Pritzker",
+   "status": "undecided",
+   "date": ""
+  },
+  "IN": {
+   "name": "Indiana",
+   "gov": "Gov. Mike Braun",
+   "status": "in",
+   "date": "2026-01-22"
+  },
+  "IA": {
+   "name": "Iowa",
+   "gov": "Gov. Kim Reynolds",
+   "status": "in",
+   "date": "2026-01-05"
+  },
+  "KS": {
+   "name": "Kansas",
+   "gov": "Gov. Laura Kelly",
+   "status": "in",
+   "date": "2026-04-13"
+  },
+  "KY": {
+   "name": "Kentucky",
+   "gov": "Gov. Andy Beshear",
+   "status": "in",
+   "date": "2026-03-17"
+  },
+  "LA": {
+   "name": "Louisiana",
+   "gov": "Gov. Jeff Landry",
+   "status": "in",
+   "date": "2025-12-17"
+  },
+  "ME": {
+   "name": "Maine",
+   "gov": "Gov. Janet Mills",
+   "status": "undecided",
+   "date": ""
+  },
+  "MD": {
+   "name": "Maryland",
+   "gov": "Gov. Wes Moore",
+   "status": "undecided",
+   "date": ""
+  },
+  "MA": {
+   "name": "Massachusetts",
+   "gov": "Gov. Maura Healey",
+   "status": "undecided",
+   "date": ""
+  },
+  "MI": {
+   "name": "Michigan",
+   "gov": "Gov. Gretchen Whitmer",
+   "status": "undecided",
+   "date": ""
+  },
+  "MN": {
+   "name": "Minnesota",
+   "gov": "Gov. Tim Walz",
+   "status": "declined",
+   "date": "2026-03-24"
+  },
+  "MS": {
+   "name": "Mississippi",
+   "gov": "Gov. Tate Reeves",
+   "status": "in",
+   "date": ""
+  },
+  "MO": {
+   "name": "Missouri",
+   "gov": "Gov. Mike Kehoe",
+   "status": "in",
+   "date": ""
+  },
+  "MT": {
+   "name": "Montana",
+   "gov": "Gov. Greg Gianforte",
+   "status": "in",
+   "date": ""
+  },
+  "NE": {
+   "name": "Nebraska",
+   "gov": "Gov. Jim Pillen",
+   "status": "in",
+   "date": "2025-09-29"
+  },
+  "NV": {
+   "name": "Nevada",
+   "gov": "Gov. Joe Lombardo",
+   "status": "in",
+   "date": ""
+  },
+  "NH": {
+   "name": "New Hampshire",
+   "gov": "Gov. Kelly Ayotte",
+   "status": "in",
+   "date": "2026-01-29"
+  },
+  "NJ": {
+   "name": "New Jersey",
+   "gov": "Gov. Mikie Sherrill",
+   "status": "undecided",
+   "date": ""
+  },
+  "NM": {
+   "name": "New Mexico",
+   "gov": "Gov. Michelle Lujan Grisham",
+   "status": "declined",
+   "date": "2026-01-27"
+  },
+  "NY": {
+   "name": "New York",
+   "gov": "Gov. Kathy Hochul",
+   "status": "announced",
+   "date": "2026-05-08"
+  },
+  "NC": {
+   "name": "North Carolina",
+   "gov": "Gov. Josh Stein",
+   "status": "in",
+   "date": "2026-06-03"
+  },
+  "ND": {
+   "name": "North Dakota",
+   "gov": "Gov. Kelly Armstrong",
+   "status": "in",
+   "date": "2026-01-26"
+  },
+  "OH": {
+   "name": "Ohio",
+   "gov": "Gov. Mike DeWine",
+   "status": "in",
+   "date": ""
+  },
+  "OK": {
+   "name": "Oklahoma",
+   "gov": "Gov. Kevin Stitt",
+   "status": "in",
+   "date": ""
+  },
+  "OR": {
+   "name": "Oregon",
+   "gov": "Gov. Tina Kotek",
+   "status": "declined",
+   "date": "2025-08-14"
+  },
+  "PA": {
+   "name": "Pennsylvania",
+   "gov": "Gov. Josh Shapiro",
+   "status": "undecided",
+   "date": ""
+  },
+  "RI": {
+   "name": "Rhode Island",
+   "gov": "Gov. Dan McKee",
+   "status": "undecided",
+   "date": ""
+  },
+  "SC": {
+   "name": "South Carolina",
+   "gov": "Gov. Henry McMaster",
+   "status": "in",
+   "date": ""
+  },
+  "SD": {
+   "name": "South Dakota",
+   "gov": "Gov. Larry Rhoden",
+   "status": "in",
+   "date": ""
+  },
+  "TN": {
+   "name": "Tennessee",
+   "gov": "Gov. Bill Lee",
+   "status": "in",
+   "date": ""
+  },
+  "TX": {
+   "name": "Texas",
+   "gov": "Gov. Greg Abbott",
+   "status": "in",
+   "date": "2025-12-10"
+  },
+  "UT": {
+   "name": "Utah",
+   "gov": "Gov. Spencer Cox",
+   "status": "in",
+   "date": ""
+  },
+  "VT": {
+   "name": "Vermont",
+   "gov": "Gov. Phil Scott",
+   "status": "undecided",
+   "date": ""
+  },
+  "VA": {
+   "name": "Virginia",
+   "gov": "Gov. Abigail Spanberger",
+   "status": "in",
+   "date": "2026-01-01"
+  },
+  "WA": {
+   "name": "Washington",
+   "gov": "Gov. Bob Ferguson",
+   "status": "undecided",
+   "date": ""
+  },
+  "WV": {
+   "name": "West Virginia",
+   "gov": "Gov. Patrick Morrisey",
+   "status": "in",
+   "date": ""
+  },
+  "WI": {
+   "name": "Wisconsin",
+   "gov": "Gov. Tony Evers",
+   "status": "vetoed",
+   "date": "2026-03-30"
+  },
+  "WY": {
+   "name": "Wyoming",
+   "gov": "Gov. Mark Gordon",
+   "status": "in",
+   "date": ""
+  }
+ }
+}

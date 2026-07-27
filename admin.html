@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JEFA Admin — State Tracker Console</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/png" href="favicon.png">
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@600;700&family=Assistant:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#16233E;--parchment:#FBF9F4;--wash:#EFF2F7;--gold:#A67F3F;--gold-deco:#C69C68;
+  --slate:#41506B;--line:#DFE4EC;--white:#fff;
+  --in:#16233E;--announced:#C69C68;--declined:#9C4A38;--undecided:#DCE2EC;
+  --display:'Frank Ruhl Libre',Georgia,serif;--body:'Assistant',Arial,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--body);background:var(--parchment);color:var(--slate);font-size:16px;line-height:1.6}
+a{color:var(--gold)}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+h1,h2,h3{font-family:var(--display);color:var(--ink);font-weight:600}
+header{background:var(--ink);color:#fff;padding:26px 0}
+header .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+header h1{color:#fff;font-size:24px}
+header .tagline{font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-deco);font-weight:700}
+.pill{font-size:13px;font-weight:700;padding:7px 14px;border-radius:20px;background:rgba(255,255,255,.12);color:#fff}
+.pill.ok{background:#1E5E3F}
+.card{background:var(--white);border:1px solid var(--line);border-radius:10px;padding:32px;margin-top:26px}
+.card h2{font-size:20px;margin-bottom:6px}
+.card .hint{font-size:14.5px;color:#7A869E;margin-bottom:20px}
+label{display:block;font-size:12.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);margin-bottom:7px}
+input[type=text],input[type=password]{width:100%;font-family:var(--body);font-size:15px;color:var(--ink);background:var(--parchment);border:1.5px solid var(--line);border-radius:5px;padding:12px 13px}
+input:focus{outline:none;border-color:var(--gold)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.btn{font-family:var(--body);font-weight:700;font-size:15px;padding:13px 26px;border:none;border-radius:5px;background:var(--gold);color:#fff;cursor:pointer;transition:background .2s}
+.btn:hover{background:#8F6C33}
+.btn:disabled{background:#C3C9D4;cursor:not-allowed}
+.btn.ghost{background:transparent;border:1.5px solid var(--ink);color:var(--ink)}
+.btn.ghost:hover{background:var(--ink);color:#fff}
+.row-actions{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:20px}
+.counts{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px}
+.cbox{border:1px solid var(--line);border-top:3px solid var(--c);border-radius:8px;padding:18px;text-align:center;background:var(--white)}
+.cbox .n{font-family:var(--display);font-size:34px;font-weight:700;color:var(--ink);line-height:1}
+.cbox .l{font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-top:6px}
+table{width:100%;border-collapse:collapse}
+th{text-align:left;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:#7A869E;padding:0 8px 12px;font-weight:700}
+td{padding:9px 8px;border-top:1px solid var(--line);vertical-align:middle}
+td.st-name{font-weight:600;color:var(--ink);white-space:nowrap}
+.seg{display:inline-flex;border:1.5px solid var(--line);border-radius:6px;overflow:hidden}
+.seg button{font-family:var(--body);font-size:12.5px;font-weight:700;padding:7px 12px;border:none;background:var(--white);color:#8A94A8;cursor:pointer;transition:.15s;white-space:nowrap}
+.seg button+button{border-left:1.5px solid var(--line)}
+.seg button:hover{background:var(--wash)}
+.seg button.on{color:#fff}
+.seg button.on[data-s=in]{background:var(--in)}
+.seg button.on[data-s=announced]{background:var(--announced)}
+.seg button.on[data-s=declined]{background:var(--declined)}
+.seg button.on[data-s=undecided]{background:#8A94A8}
+td input.note{width:100%;font-size:14px;padding:8px 10px;border:1.5px solid var(--line);border-radius:5px;background:var(--parchment)}
+.log{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px;background:var(--ink);color:#C7CEDD;border-radius:8px;padding:16px 18px;margin-top:18px;max-height:200px;overflow:auto;white-space:pre-wrap;display:none}
+.log.show{display:block}
+.log b{color:#8FD3A8}
+.log i{color:#E8A9A9;font-style:normal}
+.hide{display:none}
+.warn{background:#FFF8E8;border:1px solid #E8D9AE;border-left:4px solid var(--gold);border-radius:6px;padding:16px 20px;font-size:14.5px;margin-top:18px}
+.warn b{color:var(--ink)}
+.filter{display:flex;gap:10px;align-items:center;margin-bottom:16px;flex-wrap:wrap}
+.filter input{max-width:280px}
+.dirty{font-size:13.5px;font-weight:700;color:var(--gold)}
+textarea{width:100%;font-family:var(--body);font-size:15px;color:var(--ink);background:var(--parchment);border:1.5px solid var(--line);border-radius:5px;padding:12px 13px;line-height:1.55;resize:vertical}
+textarea:focus{outline:none;border-color:var(--gold)}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.statbox{border:1px solid var(--line);border-radius:8px;padding:16px;background:var(--parchment)}
+.statbox label{font-size:11px;margin-bottom:5px}
+.statbox input{margin-bottom:10px;background:var(--white)}
+.statbox input:last-child{margin-bottom:0}
+details.grp{border:1px solid var(--line);border-radius:8px;margin-top:14px;background:var(--parchment)}
+details.grp summary{cursor:pointer;padding:14px 18px;font-weight:700;color:var(--ink);font-size:15px;list-style:none;display:flex;align-items:center;gap:10px}
+details.grp summary::-webkit-details-marker{display:none}
+details.grp summary::before{content:"\25B8";color:var(--gold);transition:transform .2s}
+details.grp[open] summary::before{transform:rotate(90deg)}
+details.grp .gbody{padding:0 18px 18px}
+details.grp .dot{width:11px;height:11px;border-radius:50%}
+td input.gov,td input.date{width:100%;font-size:14px;padding:8px 10px;border:1.5px solid var(--line);border-radius:5px;background:var(--parchment)}
+td input.date{max-width:140px}
+.seg button{padding:7px 10px;font-size:12px}
+.counts{grid-template-columns:repeat(5,1fr)}
+footer{text-align:center;padding:40px 20px;font-size:13px;color:#98A2B6}
+@media(max-width:860px){.grid2,.grid4,.counts{grid-template-columns:1fr 1fr}table,thead,tbody,th,td,tr{display:block}th{display:none}td{border:none;padding:4px 0}tr{border-top:1px solid var(--line);padding:14px 0;display:block}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div>
+      <div class="tagline">JEFA Admin</div>
+      <h1>State Tracker Console</h1>
+    </div>
+    <span class="pill" id="connPill">Not connected</span>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- CONNECT -->
+  <div class="card" id="connectCard">
+    <h2>Sign in</h2>
+    <p class="hint">Paste your GitHub access token to unlock the console. The token is your password &mdash; it is kept only in this browser tab and is never saved to the website.</p>
+    <div style="max-width:520px">
+      <label for="tok">GitHub Access Token</label>
+      <input type="password" id="tok" placeholder="github_pat_..." autocomplete="off">
+    </div>
+    <div class="grid2" style="margin-top:16px;max-width:520px">
+      <div><label for="owner">Owner</label><input type="text" id="owner" value="rebduv1"></div>
+      <div><label for="repo">Repository</label><input type="text" id="repo" value="JEFA-Temp-Site"></div>
+    </div>
+    <div class="row-actions">
+      <button class="btn" id="btnConnect">Connect</button>
+      <label style="display:flex;align-items:center;gap:8px;text-transform:none;letter-spacing:0;font-size:14.5px;font-weight:400;color:var(--slate);margin:0">
+        <input type="checkbox" id="remember" style="width:auto"> Keep me signed in for this tab
+      </label>
+    </div>
+    <div class="warn">
+      <b>Keep this token private.</b> Anyone with it can edit your repository. If it is ever exposed, delete it on GitHub and generate a new one &mdash; that instantly revokes access.
+    </div>
+    <div class="log" id="logA"></div>
+  </div>
+
+  <!-- INTRO EDITOR -->
+  <div class="card hide" id="introCard">
+    <h2>Intro above the map</h2>
+    <p class="hint">The heading, paragraph, and status labels that appear at the top of the state section.</p>
+    <div style="margin-bottom:16px">
+      <label for="iHead">Heading</label>
+      <input type="text" id="iHead">
+    </div>
+    <div style="margin-bottom:20px">
+      <label for="iBody">Paragraph</label>
+      <textarea id="iBody" rows="3"></textarea>
+    </div>
+    <label style="margin-bottom:4px">Status labels shown above the map</label>
+    <p class="hint" style="margin-bottom:14px">The numbers count themselves from the statuses you set below. Edit the wording here.</p>
+    <div class="grid3" id="statEditors"></div>
+
+    <div style="margin-top:26px">
+      <label>Section headings &amp; descriptions below the map</label>
+      <div id="groupEditors"></div>
+    </div>
+  </div>
+
+  <!-- EDITOR -->
+  <div class="card hide" id="editorCard">
+    <h2>State participation</h2>
+    <p class="hint">Set each state&rsquo;s status, governor, and date. Everything below publishes together — the map, the counters, and the state lists.</p>
+
+    <div class="counts">
+      <div class="cbox" style="--c:#21BF73"><div class="n" id="nIn">0</div><div class="l">Opted In</div></div>
+      <div class="cbox" style="--c:#21BF73"><div class="n" id="nAnn">0</div><div class="l">Announced</div></div>
+      <div class="cbox" style="--c:#D4D8DE"><div class="n" id="nUnd">0</div><div class="l">Undecided</div></div>
+      <div class="cbox" style="--c:#F5A623"><div class="n" id="nVet">0</div><div class="l">Vetoed</div></div>
+      <div class="cbox" style="--c:#EF4B45"><div class="n" id="nDec">0</div><div class="l">Declined</div></div>
+    </div>
+
+    <div class="filter">
+      <input type="text" id="q" placeholder="Filter states…">
+      <span class="dirty hide" id="dirty">Unsaved changes</span>
+    </div>
+
+    <table>
+      <thead><tr><th style="width:150px">State</th><th style="width:330px">Status</th><th>Governor</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+
+    <div class="row-actions">
+      <button class="btn" id="btnPublish" disabled>Publish to Website</button>
+      <button class="btn ghost" id="btnReload">Discard &amp; Reload</button>
+    </div>
+    <div class="log" id="logB"></div>
+  </div>
+
+</div>
+
+<footer>JEFA &middot; State Tracker Console &middot; changes are recorded in your GitHub repository history</footer>
+
+<script>
+var API = 'https://api.github.com';
+var PATH = 'states.json';
+var ORDER = ['in','announced','undecided','vetoed','declined'];
+var LBL = {'in':'Opted in','announced':'Announced','undecided':'Undecided','vetoed':'Vetoed','declined':'Declined'};
+var DOT = {'in':'#21BF73','announced':'#21BF73','undecided':'#D4D8DE','vetoed':'#F5A623','declined':'#EF4B45'};
+var state = { token:'', owner:'', repo:'', sha:null, data:null, dirty:false };
+
+function $(id){ return document.getElementById(id); }
+function log(el, msg, cls){
+  var box = $(el); box.classList.add('show');
+  var t = new Date().toLocaleTimeString();
+  box.innerHTML += (cls ? '<'+cls+'>' : '') + '[' + t + '] ' + msg + (cls ? '</'+cls+'>' : '') + '\n';
+  box.scrollTop = box.scrollHeight;
+}
+function b64encode(str){
+  var bytes = new TextEncoder().encode(str), bin = '';
+  for(var i=0;i<bytes.length;i++) bin += String.fromCharCode(bytes[i]);
+  return btoa(bin);
+}
+function b64decode(b64){
+  var bin = atob(b64.replace(/\s/g,''));
+  var bytes = new Uint8Array(bin.length);
+  for(var i=0;i<bin.length;i++) bytes[i] = bin.charCodeAt(i);
+  return new TextDecoder().decode(bytes);
+}
+function gh(path, opts){
+  opts = opts || {};
+  opts.headers = Object.assign({
+    'Authorization':'Bearer ' + state.token,
+    'Accept':'application/vnd.github+json',
+    'X-GitHub-Api-Version':'2022-11-28'
+  }, opts.headers||{});
+  return fetch(API + path, opts).then(function(r){
+    return r.json().then(function(j){
+      if(!r.ok) throw new Error((j && j.message) || ('HTTP ' + r.status));
+      return j;
+    }).catch(function(e){
+      if(e instanceof SyntaxError) throw new Error('HTTP ' + r.status);
+      throw e;
+    });
+  });
+}
+
+$('btnConnect').addEventListener('click', function(){
+  state.token = $('tok').value.trim();
+  state.owner = $('owner').value.trim();
+  state.repo  = $('repo').value.trim();
+  if(!state.token){ log('logA','Enter your access token.','i'); return; }
+  var btn = this; btn.disabled = true; btn.textContent = 'Connecting\u2026';
+  log('logA','Connecting to ' + state.owner + '/' + state.repo + '\u2026');
+  gh('/repos/'+state.owner+'/'+state.repo)
+    .then(function(){ log('logA','Repository found. Loading state data\u2026','b'); return loadData(); })
+    .then(function(){
+      if($('remember').checked) sessionStorage.setItem('jefa_tok', state.token);
+      $('connectCard').classList.add('hide');
+      $('introCard').classList.remove('hide');
+      $('editorCard').classList.remove('hide');
+      $('connPill').textContent = 'Connected \u00b7 ' + state.owner + '/' + state.repo;
+      $('connPill').classList.add('ok');
+    })
+    .catch(function(e){
+      log('logA','Could not connect: ' + e.message, 'i');
+      log('logA','Check the token is correct, not expired, and has Contents read/write access to this repository.');
+      btn.disabled = false; btn.textContent = 'Connect';
+    });
+});
+
+function loadData(){
+  return gh('/repos/'+state.owner+'/'+state.repo+'/contents/'+PATH+'?ref=main').then(function(j){
+    state.sha = j.sha;
+    state.data = JSON.parse(b64decode(j.content));
+    if(!state.data.intro) state.data.intro = {heading:'',body:'',labels:{}};
+    if(!state.data.intro.labels) state.data.intro.labels = {};
+    if(!state.data.groups) state.data.groups = {};
+    state.dirty = false;
+    renderIntro(); render();
+  });
+}
+
+function counts(){
+  var n = {'in':0,'announced':0,'undecided':0,'vetoed':0,'declined':0};
+  Object.keys(state.data.states).forEach(function(k){
+    var s = state.data.states[k].status;
+    if(n[s] !== undefined) n[s]++;
+  });
+  return n;
+}
+function refreshCounts(){
+  var n = counts();
+  $('nIn').textContent=n['in']; $('nAnn').textContent=n.announced;
+  $('nUnd').textContent=n.undecided; $('nVet').textContent=n.vetoed; $('nDec').textContent=n.declined;
+  ['in','announced','vetoed','declined','undecided'].forEach(function(k){
+    var e = document.getElementById('pillCount-'+k);
+    if(e) e.textContent = n[k];
+  });
+}
+function markDirty(){
+  state.dirty = true;
+  $('dirty').classList.remove('hide');
+  $('btnPublish').disabled = false;
+}
+
+function renderIntro(){
+  var I = state.data.intro;
+  $('iHead').value = I.heading || '';
+  $('iBody').value = I.body || '';
+  $('iHead').oninput = function(){ I.heading = this.value; markDirty(); };
+  $('iBody').oninput = function(){ I.body = this.value; markDirty(); };
+
+  var PILL_ORDER = ['in','announced','vetoed','declined','undecided'];
+  var DEFAULT_LABELS = {'in':'opted in','announced':'announced','vetoed':'governor vetoed','declined':'declined','undecided':'no decision yet'};
+  if(!I.labels) I.labels = {};
+  PILL_ORDER.forEach(function(k){ if(!I.labels[k]) I.labels[k] = DEFAULT_LABELS[k]; });
+
+  var host = $('statEditors'); host.innerHTML = '';
+  var n = counts();
+  PILL_ORDER.forEach(function(k){
+    var d = document.createElement('div'); d.className = 'statbox';
+    var head = document.createElement('div');
+    head.style.cssText = 'display:flex;align-items:center;gap:8px;margin-bottom:9px';
+    var dot = document.createElement('span');
+    dot.style.cssText = 'width:10px;height:10px;border-radius:50%;flex:none;background:'+DOT[k];
+    var num = document.createElement('b');
+    num.id = 'pillCount-'+k;
+    num.style.cssText = 'font-family:var(--display);font-size:22px;color:var(--ink)';
+    num.textContent = n[k];
+    head.appendChild(dot); head.appendChild(num);
+    var l = document.createElement('label'); l.textContent = 'Label';
+    var inp = document.createElement('input'); inp.type='text'; inp.value = I.labels[k];
+    inp.oninput = function(){ I.labels[k] = this.value; markDirty(); };
+    d.appendChild(head); d.appendChild(l); d.appendChild(inp);
+    host.appendChild(d);
+  });
+
+  var gh_ = $('groupEditors'); gh_.innerHTML = '';
+  ORDER.forEach(function(g){
+    var G = state.data.groups[g] || (state.data.groups[g] = {title:'', blurb:''});
+    var det = document.createElement('details'); det.className = 'grp';
+    var sum = document.createElement('summary');
+    var dot = document.createElement('span'); dot.className='dot'; dot.style.background = DOT[g];
+    sum.appendChild(dot);
+    sum.appendChild(document.createTextNode(LBL[g] + ' \u2014 heading & description'));
+    var body = document.createElement('div'); body.className = 'gbody';
+    var la = document.createElement('label'); la.textContent = 'Heading';
+    var ia = document.createElement('input'); ia.type='text'; ia.value = G.title||'';
+    ia.oninput = function(){ G.title = this.value; markDirty(); };
+    var lb = document.createElement('label'); lb.style.marginTop='12px'; lb.textContent = 'Description';
+    var tb = document.createElement('textarea'); tb.rows = 2; tb.value = G.blurb||'';
+    tb.oninput = function(){ G.blurb = this.value; markDirty(); };
+    body.appendChild(la); body.appendChild(ia); body.appendChild(lb); body.appendChild(tb);
+    det.appendChild(sum); det.appendChild(body);
+    gh_.appendChild(det);
+  });
+}
+
+function render(){
+  var tb = $('rows'); tb.innerHTML = '';
+  var keys = Object.keys(state.data.states).sort(function(a,b){
+    return state.data.states[a].name.localeCompare(state.data.states[b].name);
+  });
+  keys.forEach(function(ab){
+    var rec = state.data.states[ab];
+    var tr = document.createElement('tr');
+    tr.setAttribute('data-name', rec.name.toLowerCase());
+
+    var td1 = document.createElement('td');
+    td1.className = 'st-name'; td1.textContent = rec.name;
+    tr.appendChild(td1);
+
+    var td2 = document.createElement('td');
+    var seg = document.createElement('div'); seg.className = 'seg';
+    ORDER.forEach(function(sK){
+      var b = document.createElement('button');
+      b.textContent = LBL[sK]; b.setAttribute('data-s', sK);
+      if(rec.status === sK) b.classList.add('on');
+      b.addEventListener('click', function(){
+        rec.status = sK;
+        seg.querySelectorAll('button').forEach(function(x){ x.classList.remove('on'); });
+        b.classList.add('on');
+        refreshCounts(); markDirty();
+      });
+      seg.appendChild(b);
+    });
+    td2.appendChild(seg); tr.appendChild(td2);
+
+    var td3 = document.createElement('td');
+    var gi = document.createElement('input');
+    gi.type='text'; gi.className='gov'; gi.value = rec.gov || '';
+    gi.placeholder = 'Gov. Jane Smith';
+    gi.addEventListener('input', function(){ rec.gov = gi.value; markDirty(); });
+    td3.appendChild(gi); tr.appendChild(td3);
+
+    tb.appendChild(tr);
+  });
+  refreshCounts();
+  $('dirty').classList.add('hide');
+  $('btnPublish').disabled = true;
+}
+
+$('q').addEventListener('input', function(){
+  var v = this.value.toLowerCase();
+  document.querySelectorAll('#rows tr').forEach(function(tr){
+    tr.style.display = tr.getAttribute('data-name').indexOf(v) > -1 ? '' : 'none';
+  });
+});
+
+$('btnReload').addEventListener('click', function(){
+  if(state.dirty && !confirm('Discard your unsaved changes?')) return;
+  log('logB','Reloading from GitHub…');
+  loadData().then(function(){ log('logB','Reloaded.','b'); })
+            .catch(function(e){ log('logB','Reload failed: '+e.message,'i'); });
+});
+
+$('btnPublish').addEventListener('click', function(){
+  var btn = this; btn.disabled = true; btn.textContent = 'Publishing…';
+  var n = counts();
+  state.data.updated = new Date().toISOString().slice(0,10);
+  var body = JSON.stringify({
+    message: 'Update state tracker: ' + n['in'] + ' opted in, ' + n.announced + ' announced, ' + n.vetoed + ' vetoed, ' + n.declined + ' declined',
+    content: b64encode(JSON.stringify(state.data, null, 1)),
+    sha: state.sha,
+    branch: 'main'
+  });
+  log('logB','Publishing changes…');
+  gh('/repos/'+state.owner+'/'+state.repo+'/contents/'+PATH, {method:'PUT', body:body})
+    .then(function(j){
+      state.sha = j.content.sha;
+      state.dirty = false;
+      $('dirty').classList.add('hide');
+      btn.textContent = 'Publish to Website';
+      log('logB','Published successfully.','b');
+      log('logB','The live map updates in about a minute.');
+      if(j.commit && j.commit.html_url) log('logB','Commit: ' + j.commit.html_url);
+    })
+    .catch(function(e){
+      btn.disabled = false; btn.textContent = 'Publish to Website';
+      log('logB','Publish failed: ' + e.message, 'i');
+      if(String(e.message).indexOf('does not match') > -1)
+        log('logB','The file changed elsewhere. Click "Discard & Reload", then reapply your edits.');
+    });
+});
+
+window.addEventListener('beforeunload', function(e){
+  if(state.dirty){ e.preventDefault(); e.returnValue = ''; }
+});
+
+// restore token within the same tab
+(function(){
+  var t = sessionStorage.getItem('jefa_tok');
+  if(t){ $('tok').value = t; $('remember').checked = true; }
+})();
+</script>
+</body>
+</html>
