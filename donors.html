@@ -79,6 +79,18 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .calc-cell.net{background:var(--ink)}
 .calc-cell.net .c-num{color:var(--gold-soft)}
 .calc-cell.net .c-label{color:#9AA5BC}
+.taxbill{margin-top:36px;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.tb-head{background:var(--wash);padding:18px 24px;border-bottom:1px solid var(--line);text-align:center}
+.tb-eyebrow{display:block;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+.tb-head h3{font-family:var(--display);font-weight:700;font-size:20px;color:var(--ink);margin-top:6px}
+.tb-rows{padding:6px 26px 20px}
+.tb-row{display:flex;justify-content:space-between;align-items:baseline;gap:18px;padding:15px 0;border-bottom:1px solid var(--line)}
+.tb-desc{font-size:15.5px;color:var(--slate)}
+.tb-val{font-family:var(--display);font-weight:700;font-size:22px;color:var(--ink);white-space:nowrap}
+.tb-credit .tb-val{color:var(--gold)}
+.tb-total{border-bottom:none;border-top:2px solid var(--ink);margin-top:4px;padding-top:18px}
+.tb-total .tb-desc{font-weight:700;font-size:16px;color:var(--ink)}
+.tb-total .tb-val{font-size:30px}
 .calc-note{text-align:center;font-size:14px;color:#7A869E;margin-top:26px}
 .calc-cta{text-align:center;margin-top:34px}
 
@@ -155,6 +167,10 @@ footer{background:#101A30;color:#9AA5BC;padding:72px 0 40px;font-size:15px}
   .steps{grid-template-columns:1fr}
   .calc{padding:36px 24px 32px}
   .calc-results{grid-template-columns:1fr}
+  .tb-rows{padding:6px 18px 18px}
+  .tb-desc{font-size:14.5px}
+  .tb-val{font-size:19px}
+  .tb-total .tb-val{font-size:25px}
   .foot-grid{grid-template-columns:1fr}
 }
 </style>
@@ -220,6 +236,26 @@ footer{background:#101A30;color:#9AA5BC;padding:72px 0 40px;font-size:15px}
         <div class="calc-cell net">
           <div class="c-num">$0</div>
           <div class="c-label">Your net cost</div>
+        </div>
+      </div>
+      <div class="taxbill" aria-live="polite">
+        <div class="tb-head">
+          <span class="tb-eyebrow">Example</span>
+          <h3>If you owed the IRS $5,000</h3>
+        </div>
+        <div class="tb-rows">
+          <div class="tb-row">
+            <span class="tb-desc">Your federal tax bill</span>
+            <span class="tb-val">$5,000</span>
+          </div>
+          <div class="tb-row tb-credit">
+            <span class="tb-desc">Your &sect;25F scholarship credit</span>
+            <span class="tb-val" id="tbCredit">&minus;$1,700</span>
+          </div>
+          <div class="tb-row tb-total">
+            <span class="tb-desc">What you still owe the IRS</span>
+            <span class="tb-val" id="tbOwed">$3,300</span>
+          </div>
         </div>
       </div>
       <p class="calc-note">Maximum credit of $1,700 per taxpayer per year under IRC &sect;25F. Nonrefundable; unused credit carries forward up to five years. Consult your tax advisor about your situation.</p>
@@ -412,12 +448,15 @@ function toggleMenu(btn){
 // Calculator
 (function(){
   var s = document.getElementById('giveSlider');
+  var TAX_BILL = 5000;
   var fmt = function(n){return '$'+n.toLocaleString()};
   function update(){
     var v = +s.value;
     document.getElementById('giveAmt').textContent = fmt(v);
     document.getElementById('rTuition').textContent = fmt(v);
     document.getElementById('rCredit').innerHTML = '&minus;'+fmt(v);
+    document.getElementById('tbCredit').innerHTML = '&minus;'+fmt(v);
+    document.getElementById('tbOwed').textContent = fmt(TAX_BILL - v);
     var pct = ((v - s.min) / (s.max - s.min)) * 100;
     s.style.setProperty('--fill', pct + '%');
   }
