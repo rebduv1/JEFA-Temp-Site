@@ -31,7 +31,10 @@ h1,h2,h3{font-family:var(--display);color:var(--ink);font-weight:600;line-height
 .thread::after{content:"";position:absolute;right:-7px;top:-3px;width:8px;height:8px;border:2px solid var(--gold-deco);border-radius:50%;background:var(--parchment)}
 .thread.center{margin-left:auto;margin-right:auto;transform-origin:center}
 @keyframes draw{from{transform:scaleX(0)}to{transform:scaleX(1)}}
-@media(prefers-reduced-motion:reduce){.thread{animation:none!important}}
+.fade{animation:fade .8s ease both}
+.fade.d1{animation-delay:.1s}.fade.d2{animation-delay:.22s}.fade.d3{animation-delay:.34s}.fade.d4{animation-delay:.46s}
+@keyframes fade{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.thread,.fade{animation:none!important;opacity:1!important;transform:none!important}}
 
 header{position:sticky;top:0;z-index:50;background:rgba(251,249,244,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
 .nav{display:flex;align-items:center;justify-content:space-between;height:76px}
@@ -201,11 +204,11 @@ footer{background:#101A30;color:#9AA5BC;padding:72px 0 40px;font-size:15px}
 
 <section class="page-hero">
   <div class="wrap">
-    <p class="eyebrow">For Donors</p>
-    <h1>Give $1,700. Net cost: <em>zero.</em></h1>
+    <p class="eyebrow fade d1">For Donors</p>
+    <h1 class="fade d2">Give $1,700. Net cost: <em>zero.</em></h1>
     <div class="thread center" aria-hidden="true"></div>
-    <p class="lead">The Education Freedom Tax Credit is a dollar-for-dollar federal credit &mdash; not a deduction. Every dollar you give to JEFA comes straight off your tax bill, and goes straight into a Jewish child&rsquo;s education.</p>
-    <div class="hero-ctas">
+    <p class="lead fade d3">The Education Freedom Tax Credit is a dollar-for-dollar federal credit &mdash; not a deduction. Every dollar you give to JEFA comes straight off your tax bill, and goes straight into a Jewish child&rsquo;s education.</p>
+    <div class="hero-ctas fade d4">
       <a class="btn btn-gold" href="index.html#preregister">Pre-Register Your 2027 Pledge</a>
       <a class="btn btn-ghost" href="#calculator">Try the calculator</a>
     </div>

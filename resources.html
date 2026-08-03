@@ -32,7 +32,10 @@ h1,h2,h3{font-family:var(--display);color:var(--ink);font-weight:600;line-height
 .thread::after{content:"";position:absolute;right:-7px;top:-3px;width:8px;height:8px;border:2px solid var(--gold-deco);border-radius:50%;background:var(--parchment)}
 .thread.center{margin-left:auto;margin-right:auto;transform-origin:center}
 @keyframes draw{from{transform:scaleX(0)}to{transform:scaleX(1)}}
-@media(prefers-reduced-motion:reduce){.thread{animation:none!important}}
+.fade{animation:fade .8s ease both}
+.fade.d1{animation-delay:.1s}.fade.d2{animation-delay:.22s}.fade.d3{animation-delay:.34s}.fade.d4{animation-delay:.46s}
+@keyframes fade{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.thread,.fade{animation:none!important;opacity:1!important;transform:none!important}}
 
 header{position:sticky;top:0;z-index:50;background:rgba(251,249,244,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
 .nav{display:flex;align-items:center;justify-content:space-between;height:76px}
@@ -187,6 +190,7 @@ footer{background:#101A30;color:#9AA5BC;padding:72px 0 40px;font-size:15px}
   .section{padding:76px 0}
   .map-shell{padding:20px 14px 18px}
   .map-counts{gap:18px}
+  .tcards{grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
   .note-band{padding:28px 24px}
   .foot-grid{grid-template-columns:1fr}
 }
@@ -218,10 +222,10 @@ footer{background:#101A30;color:#9AA5BC;padding:72px 0 40px;font-size:15px}
 
 <section class="page-hero">
   <div class="wrap">
-    <p class="eyebrow">Resources</p>
-    <h1>Know the program. Know your state.</h1>
+    <p class="eyebrow fade d1">Resources</p>
+    <h1 class="fade d2">Know the program. Know your state.</h1>
     <div class="thread center" aria-hidden="true"></div>
-    <p class="lead">Where every state stands on the Education Freedom Tax Credit, the primary source documents behind it, and answers to the questions our community asks most.</p>
+    <p class="lead fade d3">Where every state stands on the Education Freedom Tax Credit, the primary source documents behind it, and answers to the questions our community asks most.</p>
   </div>
 </section>
 
